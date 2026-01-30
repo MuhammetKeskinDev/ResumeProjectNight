@@ -1,0 +1,37 @@
+﻿@model List<ResumeProjectNight.Entities.ProjectCategory>
+
+@functions {
+	private static string ToSlug(string value)
+	{
+		if (string.IsNullOrWhiteSpace(value))
+		{
+			return "cat-unknown";
+		}
+
+		var chars = value.ToLowerInvariant()
+			.Select(c => char.IsLetterOrDigit(c) ? c : '-')
+			.ToArray();
+		var slug = new string(chars).Trim('-');
+		while (slug.Contains("--"))
+		{
+			slug = slug.Replace("--", "-");
+		}
+		return $"cat-{slug}";
+	}
+}
+
+
+
+	<!-- portfolio filter (desktop) -->
+	<ul class="portfolio-filter list-inline wow fadeInUp">
+		<li class="current list-inline-item" data-filter="*">Tümü</li>
+	@foreach (var item in Model)
+	{
+		var slug = ToSlug(item.CategoryName);
+		<li class="list-inline-item" data-filter=".@slug">@item.CategoryName</li>
+	}
+	
+	</ul>
+
+
+
