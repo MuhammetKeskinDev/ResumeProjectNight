@@ -231,6 +231,8 @@ $(document).on('ready', function() {
                 Slick Slider
     =========================================================================*/
     $('.testimonials-wrapper').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
       dots: true,
       arrows: false,
       autoplay: true,

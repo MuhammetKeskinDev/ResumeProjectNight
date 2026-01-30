@@ -2438,4 +2438,45 @@ body {
   }
 }
 
+/* Keep testimonials centered and single item visible */
+.testimonials-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Testimonials fallback horizontal scroll when slick is not initialized */
+.testimonials-wrapper:not(.slick-initialized) {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.testimonials-wrapper:not(.slick-initialized) .testimonial-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  scroll-snap-align: start;
+}
+
+.testimonials-wrapper:not(.slick-initialized)::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Make single testimonial larger when sliding */
+.testimonials-wrapper .slick-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.testimonials-wrapper .slick-list {
+  overflow: hidden;
+}
+
+.testimonials-wrapper .testimonial-item {
+  max-width: 720px;
+  width: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */
