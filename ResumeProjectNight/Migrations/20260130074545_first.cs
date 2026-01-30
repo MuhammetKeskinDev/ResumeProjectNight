@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ResumeProjectNight.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,6 +43,22 @@ namespace ResumeProjectNight.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HomeHeroes",
+                columns: table => new
+                {
+                    HomeHeroId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IntroText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RotatingTexts = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HomeHeroes", x => x.HomeHeroId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -58,21 +74,6 @@ namespace ResumeProjectNight.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.MessageId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Portfolios",
-                columns: table => new
-                {
-                    PortfolioId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Portfolios", x => x.PortfolioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,6 +105,22 @@ namespace ResumeProjectNight.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SocialMedias",
+                columns: table => new
+                {
+                    SocialMediaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IconClass = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialMedias", x => x.SocialMediaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Testimonials",
                 columns: table => new
                 {
@@ -118,6 +135,33 @@ namespace ResumeProjectNight.Migrations
                 {
                     table.PrimaryKey("PK_Testimonials", x => x.TestimonialId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Portfolios",
+                columns: table => new
+                {
+                    PortfolioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Portfolios", x => x.PortfolioId);
+                    table.ForeignKey(
+                        name: "FK_Portfolios_ProjectCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ProjectCategories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Portfolios_CategoryId",
+                table: "Portfolios",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -130,19 +174,25 @@ namespace ResumeProjectNight.Migrations
                 name: "Experiences");
 
             migrationBuilder.DropTable(
+                name: "HomeHeroes");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Portfolios");
 
             migrationBuilder.DropTable(
-                name: "ProjectCategories");
-
-            migrationBuilder.DropTable(
                 name: "Services");
 
             migrationBuilder.DropTable(
+                name: "SocialMedias");
+
+            migrationBuilder.DropTable(
                 name: "Testimonials");
+
+            migrationBuilder.DropTable(
+                name: "ProjectCategories");
         }
     }
 }

@@ -24,5 +24,7 @@ namespace ResumeProjectNight.Context
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
+        public DbSet<HomeHero> HomeHeroes { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
     }
 }

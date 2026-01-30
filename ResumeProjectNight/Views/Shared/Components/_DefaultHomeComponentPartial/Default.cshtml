@@ -1,24 +1,48 @@
 ﻿
+@model ResumeProjectNight.Models.HomeHeroViewModel
+
+@{
+	var hero = Model?.HomeHero;
+	var profileImageUrl = !string.IsNullOrWhiteSpace(hero?.ProfileImageUrl)
+		? hero.ProfileImageUrl
+		: "https://via.placeholder.com/108x108";
+	var nameSurname = !string.IsNullOrWhiteSpace(hero?.NameSurname)
+		? hero.NameSurname
+		: "Ad Soyad";
+	var introText = !string.IsNullOrWhiteSpace(hero?.IntroText)
+		? hero.IntroText
+		: "I'm a";
+	var rotatingTexts = !string.IsNullOrWhiteSpace(hero?.RotatingTexts)
+		? hero.RotatingTexts
+		: "Photography lover";
+}
+
 <section id="home" class="home d-flex align-items-center">
 	<div class="container">
 
 		<!-- intro -->
 		<div class="intro">
 			<!-- avatar image -->
-			<img src="https://via.placeholder.com/108x108" alt="Bolby" class="mb-4" />
+			<img src="@profileImageUrl" alt="@nameSurname" class="mb-4" />
 
 			<!-- info -->
-			<h1 class="mb-2 mt-0">Muhammet Keskin</h1>
-			<span>Ben <span class="text-rotating">Full Stack Yazılım Geliştiriciyim, Yazılım Mimarıyım,</span></span>
+			<h1 class="mb-2 mt-0">@nameSurname</h1>
+			<span>@introText <span class="text-rotating">@rotatingTexts</span></span>
 
 			<!-- social icons -->
-			<ul class="social-icons light list-inline mb-0 mt-4">
-				<li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-				<li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-				<li class="list-inline-item"><a href="#"><i class="fab fa-behance"></i></a></li>
-				<li class="list-inline-item"><a href="#"><i class="fab fa-dribbble"></i></a></li>
-				<li class="list-inline-item"><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-			</ul>
+			@if (Model?.SocialMedias != null && Model.SocialMedias.Count > 0)
+			{
+				<ul class="social-icons light list-inline mb-0 mt-4">
+					@foreach (var item in Model.SocialMedias)
+					{
+						<li class="list-inline-item">
+							<a href="@item.Url" target="_blank" rel="noopener noreferrer">
+								<i class="@item.IconClass"></i>
+							</a>
+						</li>
+					}
+				</ul>
+			}
 
 			<!-- buttons -->
 			<div class="mt-4">

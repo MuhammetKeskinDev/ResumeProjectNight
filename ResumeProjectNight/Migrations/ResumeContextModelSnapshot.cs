@@ -76,6 +76,35 @@ namespace ResumeProjectNight.Migrations
                     b.ToTable("Experiences");
                 });
 
+            modelBuilder.Entity("ResumeProjectNight.Entities.HomeHero", b =>
+                {
+                    b.Property<int>("HomeHeroId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeHeroId"));
+
+                    b.Property<string>("IntroText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RotatingTexts")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HomeHeroId");
+
+                    b.ToTable("HomeHeroes");
+                });
+
             modelBuilder.Entity("ResumeProjectNight.Entities.Message", b =>
                 {
                     b.Property<int>("MessageId")
@@ -180,6 +209,33 @@ namespace ResumeProjectNight.Migrations
                     b.HasKey("ServiceId");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("ResumeProjectNight.Entities.SocialMedia", b =>
+                {
+                    b.Property<int>("SocialMediaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SocialMediaId"));
+
+                    b.Property<string>("IconClass")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SocialMediaId");
+
+                    b.ToTable("SocialMedias");
                 });
 
             modelBuilder.Entity("ResumeProjectNight.Entities.Testimonial", b =>

@@ -12,15 +12,15 @@ using ResumeProjectNight.Context;
 namespace ResumeProjectNight.Migrations
 {
     [DbContext(typeof(ResumeContext))]
-    [Migration("20260108122259_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20260130074545_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.11")
+                .HasAnnotation("ProductVersion", "9.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -79,6 +79,35 @@ namespace ResumeProjectNight.Migrations
                     b.ToTable("Experiences");
                 });
 
+            modelBuilder.Entity("ResumeProjectNight.Entities.HomeHero", b =>
+                {
+                    b.Property<int>("HomeHeroId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeHeroId"));
+
+                    b.Property<string>("IntroText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RotatingTexts")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HomeHeroId");
+
+                    b.ToTable("HomeHeroes");
+                });
+
             modelBuilder.Entity("ResumeProjectNight.Entities.Message", b =>
                 {
                     b.Property<int>("MessageId")
@@ -122,6 +151,9 @@ namespace ResumeProjectNight.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PortfolioId"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -134,6 +166,8 @@ namespace ResumeProjectNight.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("PortfolioId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Portfolios");
                 });
@@ -180,6 +214,33 @@ namespace ResumeProjectNight.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("ResumeProjectNight.Entities.SocialMedia", b =>
+                {
+                    b.Property<int>("SocialMediaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SocialMediaId"));
+
+                    b.Property<string>("IconClass")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SocialMediaId");
+
+                    b.ToTable("SocialMedias");
+                });
+
             modelBuilder.Entity("ResumeProjectNight.Entities.Testimonial", b =>
                 {
                     b.Property<int>("TestimonialId")
@@ -207,6 +268,22 @@ namespace ResumeProjectNight.Migrations
                     b.HasKey("TestimonialId");
 
                     b.ToTable("Testimonials");
+                });
+
+            modelBuilder.Entity("ResumeProjectNight.Entities.Portfolio", b =>
+                {
+                    b.HasOne("ResumeProjectNight.Entities.ProjectCategory", "ProjectCategory")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProjectCategory");
+                });
+
+            modelBuilder.Entity("ResumeProjectNight.Entities.ProjectCategory", b =>
+                {
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }
